@@ -1,0 +1,15 @@
+{
+  "name": "apple-glass",
+  "description": "Make a web app look, move and feel like Apple's own apps: real Liquid Glass, Apple's dark palette, SF type and app-like micro-interactions.",
+  "owner": {
+    "name": "subh05sus",
+    "url": "https://github.com/subh05sus"
+  },
+  "plugins": [
+    {
+      "name": "apple-glass",
+      "source": "./",
+      "description": "Liquid Glass that refracts and catches the light, Apple's exact dark palette, San Francisco text styles, 44 pt targets and iOS-style motion, with a working kit and a page-by-page rethink workflow."
+    }
+  ]
+}

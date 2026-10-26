@@ -1,0 +1,111 @@
+/* apple-glass kit: copied verbatim from sparkmentor/frontend/app/globals.css (page and appearance transitions) on 2026-10-06. The live file wins; re-copy it when it changes. */
+/* The page itself is the only thing that moves: the shell (sidebar, header,
+   tab bar) is not captured, so it stays perfectly still. */
+:root {
+  view-transition-name: none;
+}
+
+/* Page transitions. `<PageTransition>` gives the outgoing page the
+   view-transition class `page-exit` and the incoming one `page-enter`;
+   `<html data-nav>` says which way the user is going (lib/nav-direction).
+
+   Larger screens: a quick fade with a slight rise, whatever the direction.
+   Phones: an iOS navigation push or pop for drill-downs, nothing at all for
+   sideways moves (tab to tab), like a native tab bar. */
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes vt-push-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes vt-push-out {
+  to {
+    transform: translateX(-28%);
+    filter: brightness(0.94);
+  }
+}
+@keyframes vt-pop-in {
+  from {
+    transform: translateX(-28%);
+    filter: brightness(0.94);
+  }
+}
+@keyframes vt-pop-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+::view-transition-group(.page-enter),
+::view-transition-group(.page-exit) {
+  animation-duration: 0s;
+}
+::view-transition-old(.page-exit) {
+  animation: vt-fade-out 120ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(.page-enter) {
+  animation: vt-rise-in 220ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@media (max-width: 767px) {
+  html:not([data-nav="forward"]):not([data-nav="back"])::view-transition-old(
+      .page-exit
+    ),
+  html:not([data-nav="forward"]):not([data-nav="back"])::view-transition-new(
+      .page-enter
+    ) {
+    animation: none;
+  }
+  html[data-nav="forward"]::view-transition-group(.page-enter) {
+    z-index: 2;
+  }
+  html[data-nav="forward"]::view-transition-new(.page-enter) {
+    animation: vt-push-in 380ms cubic-bezier(0.32, 0.72, 0, 1) both;
+    box-shadow: -12px 0 24px -16px rgb(0 0 0 / 0.3);
+  }
+  html[data-nav="forward"]::view-transition-old(.page-exit) {
+    animation: vt-push-out 380ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  }
+  html[data-nav="back"]::view-transition-group(.page-exit) {
+    z-index: 2;
+  }
+  html[data-nav="back"]::view-transition-old(.page-exit) {
+    animation: vt-pop-out 340ms cubic-bezier(0.32, 0.72, 0, 1) both;
+    box-shadow: -12px 0 24px -16px rgb(0 0 0 / 0.3);
+  }
+  html[data-nav="back"]::view-transition-new(.page-enter) {
+    animation: vt-pop-in 340ms cubic-bezier(0.32, 0.72, 0, 1) both;
+  }
+}
+
+/* Theme and text-size switches (lib/theme-preference): the whole page
+   cross-fades once from the old look to the new. The root is normally left
+   out of view transitions (above), so the switch opts it back in while it
+   runs; anything else captured (a named subject card) fades in step. */
+:root[data-appearance-switch] {
+  view-transition-name: root;
+}
+:root[data-appearance-switch]::view-transition-group(*),
+:root[data-appearance-switch]::view-transition-old(*),
+:root[data-appearance-switch]::view-transition-new(*) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

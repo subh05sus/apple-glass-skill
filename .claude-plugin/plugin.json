@@ -1,0 +1,12 @@
+{
+  "name": "apple-glass",
+  "description": "Make a web app look, move and feel like Apple's apps on iOS 26 and macOS Tahoe: real Liquid Glass, dark palette, SF type, micro-interactions.",
+  "version": "1.0.0",
+  "author": {
+    "name": "subh05sus"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/subh05sus/apple-glass-skill",
+  "repository": "https://github.com/subh05sus/apple-glass-skill",
+  "keywords": ["liquid-glass", "apple", "ios", "macos", "glassmorphism", "dark-mode", "design", "micro-interactions", "skill"]
+}
