@@ -63,8 +63,8 @@ interface GlassSurfaceProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Corner radius in px. Omit for a capsule/circle (half the short side). */
   radius?: number;
   /**
-   * Width of the curved rim, in px. Default: 42% of the short side (48% for
-   * clear glass).
+   * Width of the curved rim, in px. Default: 42% of the short side, at most
+   * 26 px (48% and 40 px for clear glass).
    */
   bezel?: number;
   /** Largest push at the rim, in px. Default: scales with the bezel. */

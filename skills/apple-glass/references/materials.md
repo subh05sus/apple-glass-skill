@@ -114,7 +114,7 @@ A blur with a hairline border has none of this, which is why it reads as generic
 
 | | Regular | Clear |
 |---|---|---|
-| Bezel (share of the short side that curves) | 42% | 48% |
+| Bezel (share of the short side that curves) | 42%, max 26 px | 48%, max 40 px |
 | Push at the rim | 0.75 × bezel, max 30 px | 0.8 × bezel, max 48 px |
 | Slab thickness (× bezel) | 0.9 | 1.2 |
 | Frost before the bend | 2 px | 0.6 px |

@@ -4,7 +4,9 @@
 
 A Claude skill. It does real Liquid Glass, not a blurred box with a border: the edge of each pane bends the content behind it toward the rim, magnifies it there, and catches the light. It also covers Apple's exact dark palette, San Francisco text styles, 44 pt targets, capsule and concentric shapes, and app-like micro-interactions. A working kit and a page-by-page workflow come with it.
 
-**[Try the live demo →](https://subh05sus.github.io/apple-glass-skill/demo/)** Drag the big pane over the text. The lens needs Chrome or Edge.
+**[Try the live demo →](https://subh05sus.github.io/apple-glass-skill/demo/)** A music app built with the kit, on a Mac window or an iPhone. Switch between Liquid Glass and a plain blur, and between dark and light. The lens needs Chrome or Edge.
+
+![The demo app on an iPhone: glass tab bar, mini player and account button over album art](docs/demo-iphone-light.png)
 
 | Plain blur (what most "glass" is) | Liquid Glass (this skill) |
 |---|---|
@@ -93,7 +95,7 @@ skills/apple-glass/
                            tab bar, segmented control, glass slider, sheets, switches,
                            swipe rows, animated numbers, page transitions, motion tokens
   scripts/shoot.mjs        screenshots and a design audit of a running app
-demo/index.html            the live demo
+demo/                      the live demo (a music app: index.html, app.css, app.js)
 ```
 
 The React kit expects React 19, Next.js, Tailwind CSS v4, `motion` and shadcn/Radix. `assets/kit/README.md` lists what each file needs. The kit comes from SparkMentor, where it runs in production.

@@ -139,7 +139,7 @@ Follow `references/rethink-workflow.md`. In short:
 
 **Glass, dark, regular**
 - Tint rgb(36 36 42 / .46) · blur 14 px · saturate 150% · brightness .85 (the frosted path).
-- Lens (Chromium): bezel 42% of the short side · push 0.75 × bezel, max 30 px · frost 2 px · fringe 0.06 · rim magnifies at most 3×. Clear: bezel 48% · push 0.8 × bezel, max 48 · frost 0.6.
+- Lens (Chromium): bezel 42% of the short side, max 26 px · push 0.75 × bezel, max 30 px · frost 2 px · fringe 0.06 · rim magnifies at most 3×. Clear: bezel 48%, max 40 px · push 0.8 × bezel, max 48 · frost 0.6.
 - Hairline: white .30 at the top, .06 down the sides, .09 at the bottom.
 - Shadow: 0 12px 30px -10px rgb(0 0 0 / .65).
 - **Variants:**

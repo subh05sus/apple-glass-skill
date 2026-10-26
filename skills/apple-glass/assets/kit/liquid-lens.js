@@ -94,6 +94,7 @@ function profileFor(thickness, ratio) {
 export const LENS = {
   regular: {
     bezel: 0.42, // share of the short side that curves
+    maxBezel: 26, // px: a sidebar's edge is as thick as a button's, not wider
     thickness: 0.9,
     chroma: 0.06,
     frost: 2, // px of blur before the bend; the face stays readable
@@ -103,6 +104,7 @@ export const LENS = {
   },
   clear: {
     bezel: 0.48,
+    maxBezel: 40,
     thickness: 1.2,
     chroma: 0.07,
     frost: 0.6,
@@ -247,7 +249,7 @@ export function lensFor(el, id, opts = {}) {
   if (w < 4 || h < 4) return null;
   const short = Math.min(w, h);
   const r = Math.min(opts.radius ?? short / 2, w / 2, h / 2);
-  const bezel = Math.min(opts.bezel ?? short * L.bezel, short / 2);
+  const bezel = Math.min(opts.bezel ?? Math.min(short * L.bezel, L.maxBezel), short / 2);
   const push = opts.depth ?? Math.min(bezel * L.push, L.maxPush);
   const maps = buildLensMaps(w, h, r, bezel, {
     push,

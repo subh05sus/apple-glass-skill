@@ -24,6 +24,7 @@ export const LENS: Record<
   "regular" | "clear",
   {
     bezel: number;
+    maxBezel: number;
     thickness: number;
     chroma: number;
     frost: number;
