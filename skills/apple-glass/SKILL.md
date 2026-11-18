@@ -50,6 +50,7 @@ Read each reference when its step comes up:
    - Labels on glass are monochrome.
    - Tint the background of the single primary action (Done, Send) or a destructive one (End call).
    - Never tint several controls in one bar.
+   - **Strict: never a coloured or thick edge down one side of a card, row or chip** (`border-l-4`, `border-l-[3px]`, a start border on a rounded box, an inset-shadow stripe). Apple never does it, and it reads as generated UI. Status is a small dot, an icon with a word, or a tinted fill.
 5. **Dark mode is its own palette, not an inversion.**
    - Base backgrounds recede: pure black on phones.
    - Anything presented above the base is elevated (#1C1C1E → #2C2C2E → #3A3A3C).
