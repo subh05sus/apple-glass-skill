@@ -73,7 +73,8 @@ Read each reference when its step comes up:
    - The path, in order: Clear (with the refraction lens on Chromium) → Soft (frosted, no lens; also the default under Reduce Transparency) → Solid (opaque).
    - No `backdrop-filter` support → solid.
    - Increase Contrast → solid with an outline.
-10. **Frozen pieces stay frozen.** In SparkMentor the owner signed off the glass slider thumb (`.liquid-bead`), the tab bar lens and the segmented lens. Reuse them as they are; ask before retuning.
+10. **Frozen pieces stay frozen.** In SparkMentor the owner signed off the glass slider thumb (`.liquid-bead`), the tab bar lens and the segmented lens. Reuse them as they are; ask before retuning. (2026-11-26: the lens's dark look was retuned on the owner's ask, because white rims and glows read as a white haze on a dark page. Light mode is unchanged.)
+12. **Dark glass is smoky, not white.** Apple's dark Liquid Glass darkens what is behind it and catches only a thin line of light at the top edge. A white fill above ~.10, an inner white glow, a bright ring or a brightened backdrop all read as frosted white plastic in dark mode. Check every glass piece in a dark screenshot for this.
 11. **The phone is iOS and the desktop is macOS.**
     - Phone: floating tab bar, large titles, bottom sheets, swipe actions.
     - Desktop: sidebar slab, toolbars, denser rows, right-click menus, ⌘K.
@@ -138,11 +139,13 @@ Follow `references/rethink-workflow.md`. In short:
 - **Stagger:** 40 ms, capped at 8 items.
 - **CSS curve:** `cubic-bezier(0.2, 0, 0, 1)`. iOS push: 380 ms `cubic-bezier(0.32, 0.72, 0, 1)`.
 
-**Glass, dark, regular**
-- Tint rgb(36 36 42 / .46) · blur 14 px · saturate 150% · brightness .85 (the frosted path).
+**Glass, dark, regular** (smoky, never a white wash)
+- Tint rgb(28 28 32 / .52) · blur 16 px · saturate 140% · brightness .78 (the frosted path). Milky .66, dense .76, clear white .08.
+- Light: one faint catch-line along the top (white .14), sides .035, bottom .04, glow .025. No inner white glow.
+- Lens rim in dark: specular × 0.3 (regular) / 0.45 (clear), a thinner line, sheen 0.06 instead of 0.22, back catch 0.2 instead of 0.55, half the colour fringe. `lensFor` does it from `.dark`, and `GlassSurface` rebuilds the maps when the theme flips.
+- Selected tab or segment (`.liquid-lens`): white .10 at rest with a .16 catch-line; clearer (white .04, rim .28) only while it slides or is held.
 - Lens (Chromium): bezel 42% of the short side, max 26 px · push 0.75 × bezel, max 30 px · frost 2 px · fringe 0.06 · rim magnifies at most 3×. Clear: bezel 48%, max 40 px · push 0.8 × bezel, max 48 · frost 0.6.
-- Hairline: white .30 at the top, .06 down the sides, .09 at the bottom.
-- Shadow: 0 12px 30px -10px rgb(0 0 0 / .65).
+- Shadow: 0 16px 36px -12px rgb(0 0 0 / .7).
 - **Variants:**
   - `clear`: over media only, with a 35% dim behind it.
   - `milky`: bars that hold text.

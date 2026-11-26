@@ -63,23 +63,26 @@
     --glass-solid-edge: color-mix(in srgb, var(--foreground) 8%, transparent);
   }
 
+  /* Dark: Apple's dark Liquid Glass is a smoky pane, not frosted white. The
+     fill darkens what is behind, the light is one faint catch-line along the
+     top, and the sides and bottom all but vanish. No white wash. */
   .dark .liquid-glass {
-    --glass-tint: rgb(36 36 42 / 0.46);
-    --glass-blur: 14px;
-    --glass-saturate: 150%;
-    --glass-luma: 0.85;
-    --glass-edge-top: rgb(255 255 255 / 0.3);
-    --glass-edge-side: rgb(255 255 255 / 0.06);
-    --glass-edge-low: rgb(255 255 255 / 0.025);
-    --glass-edge-bottom: rgb(255 255 255 / 0.09);
-    --glass-glow: rgb(255 255 255 / 0.08);
+    --glass-tint: rgb(28 28 32 / 0.52);
+    --glass-blur: 16px;
+    --glass-saturate: 140%;
+    --glass-luma: 0.78;
+    --glass-edge-top: rgb(255 255 255 / 0.14);
+    --glass-edge-side: rgb(255 255 255 / 0.035);
+    --glass-edge-low: rgb(255 255 255 / 0.015);
+    --glass-edge-bottom: rgb(255 255 255 / 0.04);
+    --glass-glow: rgb(255 255 255 / 0.025);
     --glass-shadow:
-      0 12px 30px -10px rgb(0 0 0 / 0.65), 0 2px 6px -1px rgb(0 0 0 / 0.4);
+      0 16px 36px -12px rgb(0 0 0 / 0.7), 0 2px 8px -2px rgb(0 0 0 / 0.45);
     --glass-rim:
-      inset 1.5px 1.5px 1px -1px rgb(255 255 255 / 0.4),
-      inset -1.5px -1.5px 1px -1px rgb(255 255 255 / 0.16),
-      inset 0 0 14px 0 rgb(255 255 255 / 0.05);
-    --glass-veil: rgb(24 24 27 / 0.32);
+      inset 1px 1px 0.5px -0.5px rgb(255 255 255 / 0.12),
+      inset -1px -1px 0.5px -0.5px rgb(255 255 255 / 0.04),
+      inset 0 0 10px 0 rgb(255 255 255 / 0.015);
+    --glass-veil: rgb(20 20 23 / 0.34);
     --glass-solid-edge: color-mix(in srgb, var(--foreground) 10%, transparent);
   }
 
@@ -166,12 +169,16 @@
     --glass-solid-edge: rgb(255 255 255 / 0.14);
   }
   .dark .liquid-glass.liquid-glass-clear {
-    --glass-tint: rgb(255 255 255 / 0.15);
-    --glass-edge-top: rgb(255 255 255 / 0.42);
-    --glass-edge-side: rgb(255 255 255 / 0.1);
-    --glass-edge-low: rgb(255 255 255 / 0.04);
-    --glass-edge-bottom: rgb(255 255 255 / 0.14);
-    --glass-glow: rgb(255 255 255 / 0.12);
+    --glass-tint: rgb(255 255 255 / 0.08);
+    --glass-edge-top: rgb(255 255 255 / 0.24);
+    --glass-edge-side: rgb(255 255 255 / 0.06);
+    --glass-edge-low: rgb(255 255 255 / 0.025);
+    --glass-edge-bottom: rgb(255 255 255 / 0.08);
+    --glass-glow: rgb(255 255 255 / 0.05);
+    --glass-rim:
+      inset 1px 1px 0.5px -0.5px rgb(255 255 255 / 0.3),
+      inset -1px -1px 0.5px -0.5px rgb(255 255 255 / 0.1),
+      inset 0 0 12px 0 rgb(255 255 255 / 0.04);
     --glass-shadow:
       0 10px 26px -10px rgb(0 0 0 / 0.6), 0 2px 6px -1px rgb(0 0 0 / 0.35);
   }
@@ -183,7 +190,7 @@
     --glass-tint: rgb(255 255 255 / 0.62);
   }
   .dark .liquid-glass.liquid-glass-milky {
-    --glass-tint: rgb(40 40 46 / 0.62);
+    --glass-tint: rgb(30 30 34 / 0.66);
   }
 
   /* Dense: the heaviest pane, for fields that hold typed text (the
@@ -197,7 +204,7 @@
     --glass-luma: 1.04;
   }
   .dark .liquid-glass.liquid-glass-dense {
-    --glass-tint: rgb(36 36 42 / 0.74);
+    --glass-tint: rgb(28 28 32 / 0.76);
     --glass-saturate: 140%;
     --glass-luma: 0.85;
   }
@@ -249,11 +256,26 @@
       0 2px 8px -2px rgb(0 0 0 / 0.15);
   }
   .dark .liquid-lens {
-    background: rgb(255 255 255 / 0.14);
+    background: rgb(255 255 255 / 0.1);
     box-shadow:
-      inset 0 0 4px 0 rgb(255 255 255 / 0.12),
-      inset 1px 1px 1px -0.5px rgb(255 255 255 / 0.3),
+      inset 0 0 4px 0 rgb(255 255 255 / 0.05),
+      inset 1px 1px 1px -0.5px rgb(255 255 255 / 0.16),
       0 2px 8px -2px rgb(0 0 0 / 0.4);
+  }
+
+  /* iOS 26: at rest the selected segment is that pill; while it slides (add `.gliding` for ~360 ms) or is held
+     (`.pressing` on the track) it turns to clear glass, so what is under it shows through, then settles back. */
+  .liquid-lens.gliding,
+  .pressing > .liquid-lens {
+    background: rgb(255 255 255 / 0.42);
+  }
+  .dark .liquid-lens.gliding,
+  .dark .pressing > .liquid-lens {
+    background: rgb(255 255 255 / 0.04);
+    box-shadow:
+      inset 1px 1px 1px -0.5px rgb(255 255 255 / 0.28),
+      inset -1px -1px 1px -0.5px rgb(255 255 255 / 0.09),
+      0 4px 12px -4px rgb(0 0 0 / 0.5);
   }
 
   /* Apple's 35% dim under clear glass when the media behind is bright. */

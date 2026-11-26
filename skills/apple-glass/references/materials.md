@@ -68,7 +68,7 @@ Put `.liquid-glass` in `@layer components` so Tailwind utilities (`absolute`, `r
 | `+ .liquid-on-dark` (with dense) | Dense glass over a known-dark section, whatever the theme | — | rgb(22 22 26 / .58) |
 | `variant="clear"` | Controls over photos and video only; add `.liquid-dim` / `.liquid-dim-top` (35% gradient) when the media is bright | white / .30, blur 3 | white / .15 |
 | `tone="destructive"` | The single coloured pane: End call | rgb(220 38 38 / .85) | / .80 |
-| `.liquid-lens` | The selected tab or segment inside a bar, a smaller denser pane | white / .35 + inset glow | white / .14 |
+| `.liquid-lens` | The selected tab or segment inside a bar, a smaller denser pane | white / .35 + inset glow | white / .10, a .16 catch-line, no glow |
 
 Every value is a custom property:
 - `--glass-tint`, `--glass-blur`, `--glass-saturate`, `--glass-luma`, `--glass-rim`
@@ -167,3 +167,13 @@ The current recipe is signed off. Raise these as choices, never as silent change
 
   Use it only where the page really alternates between light and dark sections.
 - **Desktop sidebar as glass.** It only reads as glass if something sits behind it. On a flat page, either give the window a very subtle brand-tinted backdrop (about 6% radial) or keep the sidebar solid. Ask.
+
+## Dark glass (retuned 2026-11-26)
+
+The first dark recipe read as white plastic: a white fill of .11 to .15, an inner white glow, a .3 to .5 white rim, a brightened backdrop, and a Chromium specular map at full white strength. Apple's dark Liquid Glass is smoky: it darkens what is behind, and the curved edge catches one thin line of light along the top.
+
+- Panes: tint rgb(28 28 32 / .52), blur 16, saturate 140%, brightness .78; top edge white .14, sides .035, bottom .04, glow .025; rim insets .12 / .04 / .015.
+- Clear over media: white .08, top edge .24, rim .3 / .1.
+- Tab and segment thumb: white .10, catch-line .16, faint .05 back catch, glow .03 at most, shadow 0 2px 8px -2px black .45.
+- The lens maps: specular × darkSpecular (0.3 regular, 0.45 clear), line falloff 0.7 instead of 0.9, sheen 0.06 instead of 0.22, back catch 0.2 instead of 0.55, chroma halved. Rebuild the maps when `<html class="dark">` changes.
+- Check: in a dark screenshot no glass piece should look lighter than the elevated surface (#2C2C2E) except its one top line.

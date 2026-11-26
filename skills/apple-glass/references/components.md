@@ -135,6 +135,10 @@ Tab bar · Desktop sidebar · Toolbar and header buttons · Large title header �
 ### Segmented control
 **Apple:** two to five options. In iOS 26, the track is a soft fill and the thumb behaves like glass while it moves.
 
+- At rest the selected segment is a quiet raised pill: white in light mode, white .10 in dark (a .16 catch-line top left, .05 bottom right, no inner glow, no brightening).
+- While it slides or is held it turns to clear glass (light white .42, dark white .04 with a .28 rim), then settles back. A `.gliding` class for the slide (about 360 ms) and `.pressing` on the track drive it.
+- In dark mode the Chromium lens dims its own rim (`lensFor` reads `.dark`), and the thumb rebuilds its lens when the theme flips. Without that the specular map stays white and the pill looks frosted.
+
 **Web:**
 - Track `bg-foreground/6` (on colour: `bg-black/15 ring-white/20`), `p-1`, capsule.
 - Segments 32 px (`sm` 28); labels 14 (`sm` 12) medium.

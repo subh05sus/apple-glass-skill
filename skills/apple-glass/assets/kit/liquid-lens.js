@@ -99,6 +99,7 @@ export const LENS = {
     chroma: 0.06,
     frost: 2, // px of blur before the bend; the face stays readable
     specular: 0.85,
+    darkSpecular: 0.3, // share of the rim's light in dark mode
     push: 0.75, // largest push in px, as a share of the bezel width
     maxPush: 30,
   },
@@ -109,6 +110,7 @@ export const LENS = {
     chroma: 0.07,
     frost: 0.6,
     specular: 1,
+    darkSpecular: 0.45,
     push: 0.8,
     maxPush: 48,
   },
@@ -119,7 +121,7 @@ export const LENS = {
  * and a curved rim `bezel` px wide that pushes the content up to `push` px.
  * Returns data URLs.
  */
-export function buildLensMaps(w, h, r, bezel, { push, thickness = 0.9, specular = 0.85 }) {
+export function buildLensMaps(w, h, r, bezel, { push, thickness = 0.9, specular = 0.85, dark = false }) {
   const disp = document.createElement("canvas");
   const spec = document.createElement("canvas");
   disp.width = spec.width = w;
@@ -180,9 +182,9 @@ export function buildLensMaps(w, h, r, bezel, { push, thickness = 0.9, specular 
       // Specular: a thin bright line right at the rim plus a soft sheen over
       // the steep part of the bevel, strongest where the edge faces the light.
       const facing = nx * LIGHT[0] + ny * LIGHT[1];
-      const lit = Math.max(facing, 0) ** 1.6 + 0.55 * Math.max(-facing, 0) ** 1.6;
-      const line = Math.exp(-d / 0.9);
-      const sheen = 0.22 * (1 - t) ** 2.4;
+      const lit = Math.max(facing, 0) ** 1.6 + (dark ? 0.2 : 0.55) * Math.max(-facing, 0) ** 1.6;
+      const line = Math.exp(-d / (dark ? 0.7 : 0.9));
+      const sheen = (dark ? 0.06 : 0.22) * (1 - t) ** 2.4;
       const a = Math.min(1, (line * 0.95 + sheen) * (0.18 + 0.82 * lit)) * specular;
       S[i] = 255;
       S[i + 1] = 255;
@@ -248,18 +250,24 @@ export function lensFor(el, id, opts = {}) {
   const h = Math.round(el.offsetHeight);
   if (w < 4 || h < 4) return null;
   const short = Math.min(w, h);
-  const r = Math.min(opts.radius ?? short / 2, w / 2, h / 2);
+  // The element's own corner radius, so the rim and the bend follow the shape that's drawn (a 24 px card is not a
+  // capsule). Without one, a capsule.
+  const css = typeof getComputedStyle === "function" ? parseFloat(getComputedStyle(el).borderTopLeftRadius) : NaN;
+  const r = Math.min(opts.radius ?? (css > 0 ? css : short / 2), w / 2, h / 2);
+  // Dark glass catches far less light: a faint line along the top, not a white ring (Apple's dark Liquid Glass).
+  const dark = opts.dark ?? (typeof document !== "undefined" && Boolean(el.closest?.(".dark") ?? document.documentElement.classList.contains("dark")));
   const bezel = Math.min(opts.bezel ?? Math.min(short * L.bezel, L.maxBezel), short / 2);
   const push = opts.depth ?? Math.min(bezel * L.push, L.maxPush);
   const maps = buildLensMaps(w, h, r, bezel, {
     push,
     thickness: opts.thickness ?? L.thickness,
-    specular: opts.specular ?? L.specular,
+    specular: (opts.specular ?? L.specular) * (dark ? L.darkSpecular : 1),
+    dark,
   });
   if (!maps) return null;
   const markup = lensFilterMarkup(id, w, h, maps, {
     push,
-    chroma: opts.chroma ?? L.chroma,
+    chroma: (opts.chroma ?? L.chroma) * (dark ? 0.5 : 1),
     frost: opts.frost ?? L.frost,
   });
   const tail =

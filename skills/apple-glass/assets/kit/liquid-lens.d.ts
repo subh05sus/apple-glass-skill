@@ -9,6 +9,8 @@ export interface LensOptions {
   chroma?: number;
   thickness?: number;
   specular?: number;
+  /** Light the rim for a dark page (a faint catch-line, not a white ring). Follows `.dark` unless set. */
+  dark?: boolean;
 }
 
 export interface Lens {
@@ -29,6 +31,7 @@ export const LENS: Record<
     chroma: number;
     frost: number;
     specular: number;
+    darkSpecular: number;
     push: number;
     maxPush: number;
   }
@@ -39,7 +42,7 @@ export function buildLensMaps(
   h: number,
   r: number,
   bezel: number,
-  opts: { push: number; thickness?: number; specular?: number },
+  opts: { push: number; thickness?: number; specular?: number; dark?: boolean },
 ): { displacement: string; specular: string } | null;
 
 export function lensFilterMarkup(

@@ -80,6 +80,19 @@ interface GlassSurfaceProps extends React.HTMLAttributes<HTMLDivElement> {
   specular?: number;
 }
 
+/** Whether the app is in dark mode right now (`<html class="dark">`), so the lens is rebuilt when it changes. */
+function useDarkTheme() {
+  return React.useSyncExternalStore(
+    (listener) => {
+      const observer = new MutationObserver(listener);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      return () => observer.disconnect();
+    },
+    () => document.documentElement.classList.contains("dark"),
+    () => true,
+  );
+}
+
 export function GlassSurface({
   variant = "regular",
   refract: refractProp = true,
@@ -102,8 +115,10 @@ export function GlassSurface({
     h: number;
     markup: string;
     backdrop: string;
+    dark: boolean;
   } | null>(null);
 
+  const dark = useDarkTheme();
   const glassMode = useGlassMode();
   const glassChoice = useGlassChoice();
   // The glass slider's thumb (`.liquid-bead`) keeps its frozen CSS look
@@ -145,7 +160,7 @@ export function GlassSurface({
         setLens((prev) => {
           const w = Math.round(el.offsetWidth);
           const h = Math.round(el.offsetHeight);
-          if (prev && prev.w === w && prev.h === h) return prev;
+          if (prev && prev.w === w && prev.h === h && prev.dark === dark) return prev;
           // A fresh id per map: some engines cache a filter's output by id
           // and keep painting the old one after the map changes.
           const next = lensFor(el, `glass-${baseId}-${++version}`, {
@@ -157,7 +172,7 @@ export function GlassSurface({
             chroma,
             specular,
           });
-          return next ?? prev;
+          return next ? { ...next, dark } : prev;
         });
       });
     };
@@ -169,7 +184,7 @@ export function GlassSurface({
       window.clearTimeout(settle);
       observer.disconnect();
     };
-  }, [refract, variant, radius, bezel, depth, blur, chroma, specular, baseId]);
+  }, [refract, variant, radius, bezel, depth, blur, chroma, specular, baseId, dark]);
 
   const on = refract && lens;
   const refractStyle: React.CSSProperties | undefined = on
